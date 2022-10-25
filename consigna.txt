@@ -1,4 +1,5 @@
 Realizar Diagrama de clases o Modelo de dominio. (lucidchart)
+cart -> product -> provider
 1 Carrito de compra.
 Agregar items de a 1. (enviar la cantidad es un plus, es decir, puedo agregar mas de 1)
 Remover items de a 1. (enviar la cantidad es un plus)
@@ -9,3 +10,27 @@ Calcular el monto total acumulado.
 Realizar validaciones, desde tipo de datos hasta logica de negocio.
 Utilizar Nodejs, express, mongoose y postman.
 Tipar el codigo, tanto de las request como los schemas/modelos
+
+
+cart.post tiene solamente para que le mandes productos. si no hay carrito creo uno, si hay carrito 
+uso ese. 
+cart.delete es para borrar productos del carrito
+
+despues las rutas de producto y provider son solo para actualizar stock y todo eso
+
+
+tengo mi carrito, que puede haber solamente uno en la base de datos
+
+me tienen que pasar:
+un post en la controladora del carrito, le paso el id del producto y la cantidad (con default 1)
+
+la funcion en si:
+chequeo que existe el producto, si existe chequeo el stock
+si tiene stock lo agrego a un detalle
+
+
+si no hay carrito lo creo
+
+
+que sea "escalable" api/cart/detail/:id delete me borra un producto de un detalle en el carrito
+api/cart delete me borra un carrito
