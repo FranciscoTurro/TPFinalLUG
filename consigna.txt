@@ -7,4 +7,4 @@ Al remover, si la cantidad del item a remover era 1 y este se remueve, deberia b
 Calcular el monto total acumulado.
 Realizar validaciones, desde tipo de datos hasta logica de negocio.
 Utilizar Nodejs, express, mongoose y postman.
-Tipar el codigo, tanto de las request como los schemas/modelos.
+Tipar el codigo, tanto de las request como los schemas/modelos
