@@ -1,21 +1,21 @@
-import { Schema, model, Types } from "mongoose";
+import { Schema, model, Types } from 'mongoose';
 
-interface IDetalle {
-  cantidad: Number;
-  precioTotalDetalle: Number;
+interface IDetail {
+  qty: Number;
+  detailPrice: Number;
   productID: Types.ObjectId;
 }
 
 interface ICart {
-  contenido: IDetalle[];
+  content: IDetail[];
   total: Number;
-  estado: Boolean;
+  state: Boolean;
 }
 
 const cartSchema = new Schema({
-  contenido: [{ cantidad: Number, precioTotalDetalle: Number }],
+  content: [{ qty: Number, detailPrice: Number }],
   total: Number,
-  estado: Boolean,
+  state: Boolean,
 });
 
-export const CartModel = model<ICart>("Cart", cartSchema);
+export const CartModel = model<ICart>('Cart', cartSchema);

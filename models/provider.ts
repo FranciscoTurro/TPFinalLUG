@@ -1,15 +1,15 @@
-import { Schema, model } from "mongoose";
+import { Schema, model } from 'mongoose';
 
 interface IProvider {
-  nombre: String;
-  Direccion: String;
-  Email: String;
+  name: String;
+  address: String;
+  email: String;
 }
 
 const providerSchema = new Schema({
-  nombre: String,
-  Direccion: String,
-  Email: String,
+  name: String,
+  address: String,
+  email: String,
 });
 
-export const ProviderModel = model<IProvider>("Provider", providerSchema);
+export const ProviderModel = model<IProvider>('Provider', providerSchema);
