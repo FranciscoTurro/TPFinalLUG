@@ -1,0 +1,10 @@
+Realizar Diagrama de clases o Modelo de dominio. (lucidchart)
+1 Carrito de compra.
+Agregar items de a 1. (enviar la cantidad es un plus, es decir, puedo agregar mas de 1)
+Remover items de a 1. (enviar la cantidad es un plus)
+Al agregar, si ya existe un item se debe acumular la cantidad.
+Al remover, si la cantidad del item a remover era 1 y este se remueve, deberia borrarse de la lista (no mostrar cantidad 0, eliminar el item de la lista directamente).
+Calcular el monto total acumulado.
+Realizar validaciones, desde tipo de datos hasta logica de negocio.
+Utilizar Nodejs, express, mongoose y postman.
+Tipar el codigo, tanto de las request como los schemas/modelos.

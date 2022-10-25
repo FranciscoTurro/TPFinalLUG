@@ -1,6 +1,7 @@
 import { Router } from 'express';
-import { cartController } from '../../../controllers/cart';
+import cartRoutes from './cart';
 
 const router = Router();
+router.use('/cart', cartRoutes);
 
 export default router;
