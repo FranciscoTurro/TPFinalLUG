@@ -1,10 +1,10 @@
 import { Schema, model, Types } from 'mongoose';
 
 interface IProduct {
-  price: Number;
-  description: String;
-  stock: Number;
-  name: String;
+  price: number;
+  description: string;
+  stock: number;
+  name: string;
   providerID: Types.ObjectId;
 }
 

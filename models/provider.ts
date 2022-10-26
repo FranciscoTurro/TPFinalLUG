@@ -1,9 +1,9 @@
 import { Schema, model } from 'mongoose';
 
 interface IProvider {
-  name: String;
-  address: String;
-  email: String;
+  name: string;
+  address: string;
+  email: string;
 }
 
 const providerSchema = new Schema({

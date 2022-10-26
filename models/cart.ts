@@ -1,21 +1,21 @@
 import { Schema, model, Types } from 'mongoose';
 
 interface IDetail {
-  qty: Number;
-  productPrice: Number;
+  qty: number;
+  productPrice: number;
   productID: Types.ObjectId;
 }
 
 interface ICart {
   content: IDetail[];
-  total: Number;
-  state: Boolean;
+  total: number;
+  // state: Boolean;
 }
 
 const cartSchema = new Schema({
   content: [{ qty: Number, productPrice: Number }],
   total: Number,
-  state: Boolean,
+  // state: Boolean,
 });
 
 export const CartModel = model<ICart>('Cart', cartSchema);
