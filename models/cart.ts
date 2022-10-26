@@ -6,7 +6,7 @@ interface IDetail {
   productID: Types.ObjectId;
 }
 
-interface ICart {
+export interface ICart {
   content: IDetail[];
   total: number;
   // state: Boolean;
