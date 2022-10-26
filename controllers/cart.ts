@@ -30,12 +30,7 @@ export const cartController = {
         const cart = new CartModel();
         const product = await ProductModel.findById(request.body.id);
 
-        const sameID = (element: IDetail) =>
-          element.productID == request.body.id;
-        const index = cart.content.findIndex(sameID);
-        if (index != -1) {
-          cart.content[index].qty += request.body.qty;
-        } else if (product && product.stock - request.body.qty > 0) {
+        if (product && product.stock - request.body.qty > 0) {
           cart.content.push({
             qty: request.body.qty,
             productPrice: product.price,
