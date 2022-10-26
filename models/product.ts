@@ -9,7 +9,7 @@ interface IProduct {
 }
 
 const productSchema = new Schema({
-  //agrega required fields y regexs como el de pedro para que quede piol
+  //agrega required fields y regexs como el de pedro para que quede piola
   price: Number,
   description: String,
   stock: Number,

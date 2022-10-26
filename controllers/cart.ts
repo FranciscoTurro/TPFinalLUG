@@ -6,16 +6,17 @@ import { model, Model } from 'mongoose';
 export const cartController = {
   addItem: async (request: Request, response: Response) => {
     try {
-      const cartInDB = await CartModel.find();
-      if (cartInDB.length) {
+      const cartInDB = await CartModel.findOne();
+      if (cartInDB) {
         const product = await ProductModel.findById(request.body.id);
         if (product && product.stock - request.body.qty > 0) {
-          cartInDB[cartInDB.length - 1].content.push({
+          cartInDB.content.push({
             qty: request.body.qty,
             productPrice: product.price,
             productID: request.body.id,
           });
         }
+        cartInDB.save();
         response.status(200).send('Ok');
       } else {
         const cart = new CartModel();
