@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { CartModel } from '../models/cart';
 import { ProductModel } from '../models/product';
-import { ICart } from '../models/cart';
+import { ICart, IDetail } from '../models/cart';
 
 export const cartController = {
   addItem: async (request: Request, response: Response) => {
@@ -9,27 +9,41 @@ export const cartController = {
       const cartInDB = await CartModel.findOne();
       if (cartInDB) {
         const product = await ProductModel.findById(request.body.id);
-        if (product && product.stock - request.body.qty > 0) {
+
+        const sameID = (element: IDetail) =>
+          element.productID == request.body.id;
+        const index = cartInDB.content.findIndex(sameID);
+        if (index != -1) {
+          cartInDB.content[index].qty += parseInt(request.body.qty);
+        } else if (product && product.stock - request.body.qty > 0) {
           cartInDB.content.push({
             qty: request.body.qty,
             productPrice: product.price,
             productID: request.body.id,
           });
-          cartInDB.total = calcTotal(cartInDB);
         }
+
+        cartInDB.total = calcTotal(cartInDB);
         cartInDB.save();
         response.status(200).send('Ok');
       } else {
         const cart = new CartModel();
         const product = await ProductModel.findById(request.body.id);
-        if (product && product.stock - request.body.qty > 0) {
+
+        const sameID = (element: IDetail) =>
+          element.productID == request.body.id;
+        const index = cart.content.findIndex(sameID);
+        if (index != -1) {
+          cart.content[index].qty += request.body.qty;
+        } else if (product && product.stock - request.body.qty > 0) {
           cart.content.push({
             qty: request.body.qty,
             productPrice: product.price,
-            productID: product.id,
+            productID: request.body.id,
           });
-          cart.total = calcTotal(cart);
         }
+
+        cart.total = calcTotal(cart);
         cart.save();
         response.status(200).send('Ok');
       }
@@ -47,3 +61,6 @@ const calcTotal = (cart: ICart): number => {
   });
   return total;
 };
+
+//a todo esto, si (!request.body.qty) request.body.qty=1 agregar esto
+//actualizar stock del producto agregar esto

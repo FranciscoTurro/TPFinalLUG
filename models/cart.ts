@@ -1,9 +1,9 @@
 import { Schema, model, Types } from 'mongoose';
 
-interface IDetail {
+export interface IDetail {
   qty: number;
   productPrice: number;
-  productID: Types.ObjectId;
+  productID: string;
 }
 
 export interface ICart {
@@ -13,7 +13,7 @@ export interface ICart {
 }
 
 const cartSchema = new Schema({
-  content: [{ qty: Number, productPrice: Number }],
+  content: [{ qty: Number, productPrice: Number, productID: String }],
   total: Number,
   // state: Boolean,
 });
