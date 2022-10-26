@@ -1,8 +1,8 @@
 import { Router } from 'express';
-import { cartController } from '../../../controllers/cart';
+import detailRoutes from './detail';
 
 const router = Router();
 
-router.post('/', cartController.addItem); //NEED TO CHANGE THIS ROUTE. EXPLANATION IN CONSIGNA.TXT
+router.use('/detail', detailRoutes);
 
 export default router;
