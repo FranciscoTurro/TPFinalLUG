@@ -2,27 +2,38 @@ import { Request, Response } from 'express';
 import { CartModel } from '../models/cart';
 import { ProductModel } from '../models/product';
 import { ICart, IDetail } from '../models/cart';
+import { IProduct } from '../models/product';
 
 export const cartController = {
   addItem: async (request: Request, response: Response) => {
     try {
+      if (request.body.qty < 0) {
+        response.status(500).send('Ingrese una cantidad valida');
+        return;
+      }
+
       let qty: number = parseInt(request.body.qty);
-      if (request.body.qty == undefined || request.body.qty < 0) qty = 1;
+      if (request.body.qty == undefined) qty = 1;
+
       let cartInDB = await CartModel.findOne();
       if (!cartInDB) cartInDB = new CartModel();
+
       const product = await ProductModel.findById(request.body.id);
+
       const sameID = (element: IDetail) => element.productID == request.body.id;
       const index = cartInDB.content.findIndex(sameID);
       if (product && index != -1) {
+        //si el carrito ya tiene un detalle de este producto (checkeo que existe el producto porque ts tira error si un objeto PUEDE ser nulo)
         if (product.stock - qty < 0) {
           response.status(500).send('Stock insuficiente');
           return;
         }
         cartInDB.content[index].qty += qty;
-        product.stock -= qty;
+        subtractStock(product, qty);
         product.save();
       } else if (product && product.stock - qty > 0) {
-        product.stock -= qty;
+        //si el carrito no tiene un detalle del producto
+        subtractStock(product, qty);
         product.save();
         cartInDB.content.push({
           qty: qty,
@@ -35,6 +46,7 @@ export const cartController = {
         response.status(500).send('Stock insuficiente');
         return;
       }
+
       cartInDB.total = calcTotal(cartInDB);
       cartInDB.save();
       response.status(200).send(cartInDB.content); //have it send ok later
@@ -51,6 +63,11 @@ const calcTotal = (cart: ICart): number => {
     total += element.productPrice * element.qty;
   });
   return total;
+};
+
+const subtractStock = (product: IProduct, qty: number): void => {
+  product.stock -= qty;
+  if (product.stock < 0) product.stock = 0;
 };
 
 //agregar required fields y regexs a los modelos
