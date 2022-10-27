@@ -4,6 +4,7 @@ export interface IDetail {
   qty: number;
   productPrice: number;
   productID: string;
+  productName: string;
 }
 
 export interface ICart {
@@ -13,7 +14,14 @@ export interface ICart {
 }
 
 const cartSchema = new Schema({
-  content: [{ qty: Number, productPrice: Number, productID: String }],
+  content: [
+    {
+      qty: Number,
+      productPrice: Number,
+      productID: String,
+      productName: String,
+    },
+  ],
   total: Number,
   // state: Boolean,
 });

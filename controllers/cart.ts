@@ -20,6 +20,7 @@ export const cartController = {
             qty: request.body.qty,
             productPrice: product.price,
             productID: request.body.id,
+            productName: product.name,
           });
         }
 
@@ -35,6 +36,7 @@ export const cartController = {
             qty: request.body.qty,
             productPrice: product.price,
             productID: request.body.id,
+            productName: product.name,
           });
         }
 
@@ -59,3 +61,4 @@ const calcTotal = (cart: ICart): number => {
 
 //a todo esto, si (!request.body.qty) request.body.qty=1 agregar esto
 //actualizar stock del producto agregar esto
+//agregar required fields y regexs a los modelos
