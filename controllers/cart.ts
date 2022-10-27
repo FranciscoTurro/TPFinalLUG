@@ -7,21 +7,33 @@ export const cartController = {
   addItem: async (request: Request, response: Response) => {
     try {
       let qty: number = parseInt(request.body.qty);
-      if (request.body.qty == undefined) qty = 1; //if the request doesnt specify a quantity to add it defaults to 1
+      if (request.body.qty == undefined || request.body.qty < 0) qty = 1;
       let cartInDB = await CartModel.findOne();
       if (!cartInDB) cartInDB = new CartModel();
       const product = await ProductModel.findById(request.body.id);
       const sameID = (element: IDetail) => element.productID == request.body.id;
       const index = cartInDB.content.findIndex(sameID);
-      if (index != -1) {
+      if (product && index != -1) {
+        if (product.stock - qty < 0) {
+          response.status(500).send('Stock insuficiente');
+          return;
+        }
         cartInDB.content[index].qty += qty;
+        product.stock -= qty;
+        product.save();
       } else if (product && product.stock - qty > 0) {
+        product.stock -= qty;
+        product.save();
         cartInDB.content.push({
           qty: qty,
           productPrice: product.price,
           productID: request.body.id,
           productName: product.name,
         });
+      } else {
+        //si el usuario quiere agregar mas productos de los que hay en el stock al carrito creado por primera vez viene por aca, asi que no se crea un carrito en ningun momento. no encuentro una solucion mejor
+        response.status(500).send('Stock insuficiente');
+        return;
       }
       cartInDB.total = calcTotal(cartInDB);
       cartInDB.save();
@@ -41,10 +53,7 @@ const calcTotal = (cart: ICart): number => {
   return total;
 };
 
-//actualizar stock del producto agregar esto
 //agregar required fields y regexs a los modelos
 //agregar delete obviamente
 //need a check to not add the same product or provider twice
-//agrega checks necesarios, como que la cantidad de producto a agregar al detalle no sea 0
-//otra, si no se agrega algo al carrito por el stock avisa
 //add y delete un cart
