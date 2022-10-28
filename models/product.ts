@@ -9,11 +9,11 @@ export interface IProduct {
 }
 
 const productSchema = new Schema({
-  price: Number,
+  price: { type: Number, required: true },
   description: String,
-  stock: Number,
-  name: String,
-  providerID: { type: Schema.Types.ObjectId, ref: 'Provider' },
+  stock: { type: Number, required: true },
+  name: { type: String, required: true },
+  providerID: { type: Schema.Types.ObjectId, ref: 'Provider', required: true },
 });
 
 export const ProductModel = model<IProduct>('Product', productSchema);

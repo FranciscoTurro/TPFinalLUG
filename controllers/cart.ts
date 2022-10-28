@@ -7,7 +7,7 @@ import { IProduct } from '../models/product';
 export const cartController = {
   addItem: async (request: Request, response: Response) => {
     try {
-      if (request.body.qty < 0) {
+      if (request.body.qty <= 0) {
         response.status(500).send('Ingrese una cantidad valida');
         return;
       }
@@ -42,14 +42,15 @@ export const cartController = {
           productName: product.name,
         });
       } else {
-        //si el usuario quiere agregar mas productos de los que hay en el stock al carrito creado por primera vez viene por aca, asi que no se crea un carrito en ningun momento. no encuentro una solucion mejor
+        //si el usuario quiere agregar mas productos de los que hay en el stock al carrito creado por primera vez viene por aca, crea un carrito vacio
         response.status(500).send('Stock insuficiente');
+        cartInDB.save();
         return;
       }
 
       cartInDB.total = calcTotal(cartInDB);
       cartInDB.save();
-      response.status(200).send(cartInDB.content); //have it send ok later
+      response.status(200).send(cartInDB.content);
     } catch (error) {
       console.log(error);
       response.status(500).send('Error');
@@ -70,7 +71,5 @@ const subtractStock = (product: IProduct, qty: number): void => {
   if (product.stock < 0) product.stock = 0;
 };
 
-//agregar required fields y regexs a los modelos
-//agregar delete obviamente
-//need a check to not add the same product or provider twice
+//agregar remover items obviamente
 //add y delete un cart

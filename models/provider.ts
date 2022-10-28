@@ -7,9 +7,9 @@ interface IProvider {
 }
 
 const providerSchema = new Schema({
-  name: String,
+  name: { type: String, required: true },
   address: String,
-  email: String,
+  email: { type: String, required: true },
 });
 
 export const ProviderModel = model<IProvider>('Provider', providerSchema);
