@@ -1,9 +1,9 @@
 import dotenv from 'dotenv';
-dotenv.config();
-
 import express, { Express } from 'express';
 import mongoose from 'mongoose';
 import apiRoutes from './routes/api';
+
+dotenv.config();
 
 const app: Express = express();
 
