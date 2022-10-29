@@ -12,7 +12,7 @@ export const productController = {
         return;
       }
 
-      const body = request.body; //need a check to not add the same product twice
+      const body = request.body;
       const model = new ProductModel({ ...body });
       await model.save();
       response.status(200).send('Ok');
