@@ -10,7 +10,6 @@ export interface IDetail {
 export interface ICart {
   content: IDetail[];
   total: number;
-  // state: Boolean;
 }
 
 const cartSchema = new Schema({
@@ -23,7 +22,6 @@ const cartSchema = new Schema({
     },
   ],
   total: Number,
-  // state: Boolean,
 });
 
 export const CartModel = model<ICart>('Cart', cartSchema);

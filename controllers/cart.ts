@@ -96,6 +96,26 @@ export const cartController = {
       response.status(500).send('Error');
     }
   },
+  addCart: async (request: Request, response: Response) => {
+    try {
+      let cartInDB = await CartModel.findOne();
+      if (!cartInDB) cartInDB = new CartModel();
+      await cartInDB.save();
+      response.status(200).send('Ok');
+    } catch (error) {
+      console.log(error);
+      response.status(500).send('Error');
+    }
+  },
+  removeCart: async (request: Request, response: Response) => {
+    try {
+      await CartModel.findByIdAndDelete(request.body.id);
+      response.status(200).send('Ok');
+    } catch (error) {
+      console.log(error);
+      response.status(500).send('Error');
+    }
+  },
 };
 
 const calcTotal = (cart: ICart): number => {
@@ -114,5 +134,3 @@ const subtractStock = (product: IProduct, qty: number): void => {
 const addStock = (product: IProduct, qty: number): void => {
   product.stock += qty;
 };
-
-//add y delete un cart
