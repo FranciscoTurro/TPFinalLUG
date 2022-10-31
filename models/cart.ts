@@ -3,7 +3,7 @@ import { Schema, model, Types } from 'mongoose';
 export interface IDetail {
   qty: number;
   productPrice: number;
-  productID: string;
+  productID: Types.ObjectId;
   productName: string;
 }
 
@@ -17,7 +17,10 @@ const cartSchema = new Schema({
     {
       qty: Number,
       productPrice: Number,
-      productID: String,
+      productID: {
+        type: Schema.Types.ObjectId,
+        ref: 'Product',
+      },
       productName: String,
     },
   ],
