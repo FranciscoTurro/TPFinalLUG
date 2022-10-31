@@ -11,6 +11,7 @@ app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
 
 app.use('/api', apiRoutes);
+//middleware, ejecuta apiRoutes cuando se hace cualquier request
 
 app.listen(process.env.PORT, () => {
   console.log(`Server up at port ${process.env.PORT}`);

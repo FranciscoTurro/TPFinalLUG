@@ -1,5 +1,4 @@
 import { Router } from 'express';
-import { Model } from 'mongoose';
 import { providerController } from '../../../controllers/provider';
 
 const router = Router();
